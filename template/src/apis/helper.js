@@ -6,19 +6,8 @@
 // 开发时，使用webpack-dev-server，接口请求，无论是mock server，还是实际server，都被转接，不需要处理跨域问题
 import request from 'superagent';
 
-function handleResponse(err, res, resolve, reject) {
-  if ( err ) {
-    reject(err);
-  }
-
-  const status = res.status;
-  const data = res.body;
-
-  // 根据接口规范，进一步补充
-}
-
 export function get(baseUrl, params = [], query = {}) {
-  const url = `${baseUrl}/${params.join('/')}`;
+  const url = finalUrl(baseUrl, params);
 
   return new Promise((resolve, reject) => {
     request.get(url)
@@ -34,7 +23,7 @@ export function get(baseUrl, params = [], query = {}) {
 }
 
 export function post(baseUrl, data, params = []) {
-  const url = `${baseUrl}/${params.join('/')}`;
+  const url = finalUrl(baseUrl, params);
 
   return new Promise((resolve, reject) => {
     request.post(url)
@@ -46,7 +35,7 @@ export function post(baseUrl, data, params = []) {
 }
 
 export function put(baseUrl, data, params = []) {
-  const url = `${baseUrl}/${params.join('/')}`;
+  const url = finalUrl(baseUrl, params);
 
   return new Promise((resolve, reject) => {
     request.put(url)
@@ -69,7 +58,7 @@ export function del(baseUrl, params = []) {
 }
 
 export function postForm(baseUrl, data, params = []) {
-  const url = `${baseUrl}/${params.join('/')}`;
+  const url = finalUrl(baseUrl, params);
 
   return new Promise((resolve, reject) => {
     const form = new FormData();
@@ -88,4 +77,23 @@ export function postForm(baseUrl, data, params = []) {
         handleResponse(err, res, resolve, reject);
       });
   });
+}
+
+function handleResponse(err, res, resolve, reject) {
+  if ( err ) {
+    reject(err);
+  }
+
+  const status = res.status;
+  const data = res.body;
+
+  // 根据接口返回数据约定，进一步补充
+  // 2xx和3xx：成功
+  // { data: {} }
+  // 4xx和5xx：失败
+  // { err: {} }
+}
+
+function finalUrl(baseUrl, params) {
+  return [baseUrl].concat(params).join('/');
 }
