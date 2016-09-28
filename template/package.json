@@ -19,7 +19,7 @@
 
   },
   "mockPort": 9000,
-  ""dependencies": {
+  "dependencies": {
     "vue": "^1.0.21",
     "superagent": "^2.3.0",
     "babel-runtime": "^6.0.0"
