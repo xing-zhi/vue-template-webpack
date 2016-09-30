@@ -19,6 +19,11 @@
       <a href="https://github.com/vuejs/vue-router/" target="_blank">vue-router</a> for routing and
       <a href="https://github.com/vuejs/vuex/" target="_blank">vuex</a> for state management.
     </p>
+    <div>
+      <a v-link="{ name: 'page1' }">page1</a>
+      <a v-link="{ name: 'page2' }">page2</a>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
